@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TV Series | 365 Entertainment</title>
+    <link rel="icon" href="images/logo.jpg" type="image/png" sizes="16x20">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+</head>
+<body>
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="videoplayback.webm" type="video/webm">
+    </video>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="navlinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <ul class="nav-right">
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Signup</a></li>
+                <li class="admin-link"><a href="admin-login.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <div class="carousel">
+        <div class="slideshow-container">
+            <div class="mySlides fade">
+                <img src="tvshow img/land money.jpg" style="width:100%">
+            </div>
+            <div class="mySlides fade">
+                <img src="tvshow img/land stranger.jpg" style="width:100%">
+            </div>
+            <div class="mySlides fade">
+                <img src="tvshow img/land wednesday.jpg" style="width:100%">
+            </div>
+            <div class="mySlides fade">
+                <img src="tvshow img/land mirzapur.jpg"style="width:100%">
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        </div>
+    </div>
+
+    <section class='bar'>
+        <div class="dropdown">
+            <button class="dropdown-btn"><span id='genre-name'>Genre</span>
+                <img src="images/caret-down-solid.svg" alt="">
+            </button>
+            <div class="dropdown-list">
+                <a href="#" data-filter='all' class='genre'>All</a>
+                <a href="#" data-filter='action' class='genre'>Action</a>
+                <a href="#" data-filter='drama' class='genre'>Drama</a>
+                <a href="#" data-filter='sci-fi' class='genre'>Sci-Fi</a>
+            </div>
+        </div>
+        <div class="search">
+        <form class="search-form" onsubmit="event.preventDefault(); search();">
+            <input type="text" placeholder="Search your favourite tv series title" id='input' onkeyup="search()" autocomplete="off">
+            <button type="submit" class="searchbtn"><img src="images/search-solid.svg" alt=""></button>
+        </form>
+        <div id="search-suggestions-global" class="search-suggestions" style="width: 63vw; margin: 0 auto; left: 0; right: 0;"></div>
+    </div>
+    </section>
+
+    <section>
+        <div class="images" id='block'>
+            <div class="box sci-fi">
+                <img src="tvshow img/stranger things.jpg" alt="">
+                <div class="text">
+                    <h3>Stranger Things</h3>
+                    Netflix Original - Sci-Fi & Horror.
+                </div>
+            </div>
+            <div class="box action">
+                <img src="tvshow img/the boys.jpeg" alt="">
+                <div class="text">
+                    <h3>The Boys</h3>
+                    Prime Video - Action & Dark Hero.
+                </div>
+            </div>
+            <div class="box sci-fi">
+                <img src="tvshow img/dark.jpg" alt="">
+                <div class="text">
+                    <h3>Dark</h3>
+                    Netflix - Mystery & Sci-Fi Thriller.
+                </div>
+            </div>
+            <div class="box action">
+                <img src="tvshow img/reacher.jpg" alt="">
+                <div class="text">
+                    <h3>Reacher</h3>
+                    Prime Video - Action & Crime.
+                </div>
+            </div>
+            <div class="box action">
+                <img src="tvshow img/money.jpg" alt="">
+                <div class="text">
+                    <h3>Money Heist</h3>
+                    Netflix - Action & Heist.
+                </div>
+            </div>
+            <div class="box drama">
+                <img src="tvshow img/crown.jpg" alt="">
+                <div class="text">
+                    <h3>The Crown</h3>
+                    Netflix - Historical Drama.
+                </div>
+            </div>
+            <div class="box action">
+                <img src="tvshow img/mirzapur.jpg" alt="">
+                <div class="text">
+                    <h3>Mirzapur</h3>
+                    Prime Video - Action & Crime.
+                </div>
+            </div>
+            <div class="box drama">
+                <img src="tvshow img/wednesday.jpg" alt="">
+                <div class="text">
+                    <h3>Wednesday</h3>
+                    Netflix - Comedy & Fantasy.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <img src="images/logo.jpg" alt="">
+        <p>Powered by 365 Entertainment Portal 2026. All Rights Reserved.</p>
+    </footer>
+    
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-details">
+            </div>
+        </div>
+    </div>
+    
+</body>
+<script src="script.js"></script>
+<script src="movies-ratings.js"></script>
+</html>

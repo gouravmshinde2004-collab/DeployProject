@@ -1,6 +1,9 @@
-// slideshow 
 var slideIndex = 1;
 showSlides(slideIndex);
+
+setInterval(function () {
+    plusSlides(1);
+}, 4000);
 
 function plusSlides(n) {
     showSlides(slideIndex += n);
@@ -24,7 +27,6 @@ slides[slideIndex-1].style.display = "block";
 
 }
 
-// search box filter
 const search = () => {
     let filter = document.getElementById('input').value.toLowerCase();
 
@@ -49,7 +51,6 @@ const search = () => {
     }
 }
 
-// filter according to genre
 const genre=document.getElementsByClassName('genre');
 const movieList = document.getElementsByClassName('box');
 const dropdownBtn= document.getElementById('genre-name');
@@ -78,10 +79,108 @@ for(var i=0;i<genre.length;i++){
 }
 
 
-// hamburger menubar
 const hamburger= document.getElementById('hamburger');
 const navLinks= document.getElementById('navlinks');
 
-hamburger.addEventListener('click', () => {
-    navLinks.classList.toggle('show');
-})
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('show');
+    });
+}
+
+(function() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get('search');
+    const searchInput = document.getElementById('input');
+    
+    if (searchQuery && searchInput) {
+        searchInput.value = searchQuery;
+        setTimeout(search, 100);
+    }
+})();
+
+(function() {
+    const setupSuggestions = (inputId, suggestionsId) => {
+        const input = document.getElementById(inputId);
+        const suggestionsBox = document.getElementById(suggestionsId);
+
+        if (input && suggestionsBox) {
+            input.addEventListener('input', async () => {
+                const q = input.value.trim();
+                if (q.length < 2) {
+                    suggestionsBox.style.display = 'none';
+                    return;
+                }
+
+                try {
+                    const res = await fetch(`/api/search-suggestions?q=${encodeURIComponent(q)}`);
+                    const data = await res.json();
+                    if (data.success && data.suggestions.length > 0) {
+                        suggestionsBox.innerHTML = '';
+                        data.suggestions.forEach(s => {
+                            const div = document.createElement('div');
+                            div.className = 'suggestion-item';
+                            div.textContent = s;
+                            div.onclick = () => {
+                                input.value = s;
+                                suggestionsBox.style.display = 'none';
+                                if (inputId === 'hero-input') {
+                                    window.location.href = `movies.html?search=${encodeURIComponent(s)}`;
+                                } else {
+                                    if (typeof search === 'function') search();
+                                }
+                            };
+                            suggestionsBox.appendChild(div);
+                        });
+                        suggestionsBox.style.display = 'block';
+                    } else {
+                        suggestionsBox.style.display = 'none';
+                    }
+                } catch (e) {
+                    console.error('Suggestions error:', e);
+                }
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!input.contains(e.target) && !suggestionsBox.contains(e.target)) {
+                    suggestionsBox.style.display = 'none';
+                }
+            });
+        }
+    };
+
+    setupSuggestions('hero-input', 'search-suggestions');
+    setupSuggestions('input', 'search-suggestions-global'); 
+})();
+
+(function() {
+    const user = JSON.parse(localStorage.getItem('user') || localStorage.getItem('admin') || 'null');
+    const navRight = document.querySelector('.nav-right');
+    const navLinksList = document.getElementById('navlinks');
+
+    if (user && navLinksList) {
+        const wlLi = document.createElement('li');
+        wlLi.innerHTML = '<a href="watchlist.html">Watchlist</a>';
+        navLinksList.appendChild(wlLi);
+
+        if (navRight) {
+            navRight.innerHTML = `
+                <li style="color: #01b4e4; font-weight: bold;"><i class="fas fa-user"></i> ${user.name}</li>
+                <li><a href="#" id="logout-btn">Logout</a></li>
+            `;
+            if (user.role === 'admin') {
+                const adminLi = document.createElement('li');
+                adminLi.className = 'admin-link';
+                adminLi.innerHTML = '<a href="admin.html">Admin</a>';
+                navRight.appendChild(adminLi);
+            }
+
+            document.getElementById('logout-btn').onclick = (e) => {
+                e.preventDefault();
+                localStorage.removeItem('user');
+                localStorage.removeItem('admin');
+                window.location.href = 'index.html';
+            };
+        }
+    }
+})();

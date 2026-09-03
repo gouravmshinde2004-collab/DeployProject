@@ -9,12 +9,9 @@
     <title>Home | 365 Entertainment</title>
 </head>
 <body >
-<!-- header with animation of linear gradient
-include navbar logo movies tvseries audio
-link 365 to present page 
-link movies to other page
-on hover lighten color
-365 with cursor pointer-->
+<video class="bg-video" autoplay muted loop playsinline>
+    <source src="videoplayback.webm" type="video/webm">
+</video>
 <header>
     <nav>
         <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
@@ -24,13 +21,17 @@ on hover lighten color
         <ul id="navlinks">
             <li><a href="index.html">Home</a></li>
             <li><a href="movies.html">Movies</a></li>
-            <li><a href="#">TV Series</a></li>
-            <li><a href="#">Audio</a></li>
+            <li><a href="tvshow.html">TV Series</a></li>
+            <li><a href="about.html">About Us </a></li>
+        </ul>
+        <ul class="nav-right">
+            <li><a href="login.html">Login</a></li>
+            <li><a href="signup.html">Signup</a></li>
+            <li class="admin-link"><a href="admin-login.html">Admin</a></li>
         </ul>
     </nav>
 </header>
 
-<!-- carousel full display -->
 <div class="carousel">
     
     <div class="slideshow-container">
@@ -71,18 +72,31 @@ on hover lighten color
     </div>
 </div>
 
-<!-- header popular in action bottom border
-add images of movie with bold names on it and subheading -->
+<div class="hero">
+        <h2>Welcome To 365-Entertainment.</h2>
+        <h3>Millions of movies, TV shows and people to discover. Explore now.</h3>
+        <div class="hero-search">
+            <form onsubmit="event.preventDefault(); window.location.href='movies.html?search=' + document.getElementById('hero-input').value;">
+                <input type="text" id="hero-input" placeholder="Search for a movie, tv show, person..." autocomplete="off">
+                <button type="submit">Search</button>
+            </form>
+            <div id="search-suggestions" class="search-suggestions"></div>
+        </div>
+    </div>
+
+
 <section >
     <h1>Popular in Action</h1>
     <div class="images">
         <div class="box action">
-            <img src="images/a1.jpg" alt="" >
+            <img src="images/last city.jpg" alt="" >
             <div class="text">
                 <h3>Last City</h3>
                 Thriller, Mystery & Comedy.
+        
             </div>
         </div>
+
         <div class="box action">
             <img src="images/a2.jpg" alt="">
             <div class="text">
@@ -218,15 +232,69 @@ add images of movie with bold names on it and subheading -->
     </div>
 </section>
 
-<!-- in drama -->
-<!-- in sci-fic -->
 
-<!-- footer with logo and cotent and animation like header -->
+<section>
+    <h1>Upcoming Movies</h1>
+    <div class="images">
+        <div class="box upcoming">
+            <img src="images/front1.jpg" alt="">
+            <div class="text">
+                <h3>The Future</h3>
+                Releasing Summer 2026.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front2.jpg" alt="">
+            <div class="text">
+                <h3>Mars Colony</h3>
+                The journey begins in late 2026.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front3.jpg" alt="">
+            <div class="text">
+                <h3>Deep Sea</h3>
+                Mystery from the depths - 2027.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front4.jpg" alt="">
+            <div class="text">
+                <h3>Cyber City</h3>
+                Neon nights are coming soon.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front5.jpg" alt="">
+            <div class="text">
+                <h3>Ghost Hunter</h3>
+                The hunt starts this October.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/logo.jpg" alt="">
+            <div class="text">
+                <h3>365 Original</h3>
+                Our first exclusive production.
+            </div>
+        </div>
+    </div>
+</section>
+
 <footer>
     <img src="images/logo.jpg" alt="">
-    <p>Powered by 365 Entertainment Portal 2019. All Rights Reserved.</p>
+    <p>Powered by 365 Entertainment Portal 2026. All Rights Reserved.</p>
 </footer>
-
+    
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-details">
+            </div>
+        </div>
+    </div>
+    
 </body>
 <script src="script.js"></script>
+<script src="movies-ratings.js"></script>
 </html>

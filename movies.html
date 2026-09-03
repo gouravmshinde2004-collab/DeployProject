@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
 </head>
 <body>
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="videoplayback.webm" type="video/webm">
+    </video>
     <header>
         <nav>
             <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
@@ -18,13 +21,17 @@
             <ul id="navlinks">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="movies.html">Movies</a></li>
-                <li><a href="#">TV Series</a></li>
-                <li><a href="#">Audio</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <ul class="nav-right">
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Signup</a></li>
+                <li class="admin-link"><a href="admin-login.html">Admin</a></li>
             </ul>
         </nav>
     </header>
     
-    <!-- carousel full display -->
     <div class="carousel">
     
     <div class="slideshow-container">
@@ -67,8 +74,6 @@
     </div>
 
     <section class='bar'>
-        <!-- genre option -->
-        <!-- dropdown menu -->
     <div class="dropdown">
         <button class="dropdown-btn" ><span id='genre-name'>Genre</span>
             <img src="images/caret-down-solid.svg" alt="">
@@ -78,16 +83,16 @@
                 <a href="#" data-filter='action'class='genre'>Action</a>
                 <a href="#" data-filter='drama' class='genre'>Drama</a>
                 <a href="#" data-filter='sci-fi' class='genre'>Sci-Fi</a>
+                <a href="#" data-filter='upcoming' class='genre'>Upcoming</a>
         </div>
     </div>
 
-    <!-- search bar -->
     <div class="search">
-        <form >
-            <input type="text" placeholder="Search your favourite movie title" id='input' onkeyup="search()">
+        <form class="search-form" onsubmit="event.preventDefault(); search();">
+            <input type="text" placeholder="Search your favourite movie title" id='input' onkeyup="search()" autocomplete="off">
             <button type="submit" class="searchbtn"><img src="images/search-solid.svg" alt=""></button>
         </form>
-    
+        <div id="search-suggestions-global" class="search-suggestions" style="width: 63vw; margin: 0 auto; left: 0; right: 0;"></div>
     </div>
     
     </section>
@@ -140,8 +145,8 @@
         <div class="box">
             <img src="images/8.jpg" alt="">
             <div class="text">
-                <h3>Batwoman</h3>
-                    A Marvel Comics superhero team.
+                <h3>American Pscyho</h3>
+                    A American Psycho, Triller, Suspense.
                     
             </div>
         </div>
@@ -169,8 +174,8 @@
         <div class="box">
             <img src="images/9.jpg" alt="">
             <div class="text">
-                <h3>Wonder Woman</h3>
-                    A Marvel Comics superhero team.
+                <h3>Romeo & Juliet</h3>
+                    Hollywood Historic Romance & Love-story
                     
             </div>
         </div>
@@ -178,24 +183,25 @@
         <div class="box">
             <img src="images/10.jpg" alt="">
             <div class="text">
-                <h3>Captain Marvel</h3>
-                    A Marvel Comics superhero team.
+                <h3>Lai Bhari</h3>
+                    Epic Marathi Drama Movie.
                     
             </div>
         </div>
         <div class="box">
             <img src="images/11.jpg" alt="">
             <div class="text">
-                <h3>Hulk</h3>
-                A Marvel Comics superhero team.
+                <h3>Wonder Woman</h3>
+                A DC Comics superhero team.
                     
             </div>
         </div>
         <div class="box">
             <img src="images/12.jpg" alt="">
             <div class="text">
-                <h3>Iron-Man
-                A Marvel Comics superhero team.</h3>
+                <h3>Avengers Assembled.</h3>
+                A Marvel Comics superhero team.
+
                     
             </div>
         </div>
@@ -217,7 +223,7 @@
             <img src="images/a3.jpg" alt="">
             <div class="text">
                 <h3>Japanese Marvel</h3>
-                    A Marvel Comics superhero team.
+                    Japanese manga series written by Tsugumi
             </div>
         </div>
         <div class="box action">
@@ -231,7 +237,7 @@
             <img src="images/a5.jpg" alt="">
             <div class="text">
                 <h3>Justice League</h3>
-                    2003 American martial arts film.
+                    A DC Comics Superheroes Teams.
                 
             </div>
         </div>
@@ -305,7 +311,7 @@
             <img src="images/15.jpg" alt="">
             <div class="text">
                 <h3>Batman</h3>
-                    A Marvel Comics superhero team.
+                    A DC Comics superhero team.
                     
             </div>
         </div>
@@ -320,8 +326,8 @@
         <div class="box">
             <img src="images/17.jpg" alt="">
             <div class="text">
-                <h3>Kill Bill</h3>
-                    2003 American martial arts film.
+                <h3>Bahubali-The Epic</h3>
+                    Great Indian Historic Drama.
                     
             </div>
         </div>
@@ -337,23 +343,23 @@
             <img src="images/19.jpg" alt="">
             <div class="text">
                 <h3>Interstellar</h3>
-                A Marvel Comics superhero team
+                A HollyWood Sci-Fi,Triller,Suspense.
                     
             </div>
         </div>
         <div class="box">
             <img src="images/21.jpg" alt="">
             <div class="text">
-                <h3>Thor</h3>
-                    A Marvel Comics superhero team.
+                <h3>Fast & Furios 7</h3>
+                    Thriller, Mystery & Action.
                     
             </div>
         </div>
         <div class="box sci-fi">
             <img src="images/22.jpg" alt="">
             <div class="text">
-                <h3>Captain America</h3>
-                    A Marvel Comics superhero team.
+                <h3>Friends With Benefits</h3>
+                    A HollyWood Romance & Suspense.
                     
             </div>
         </div>
@@ -375,7 +381,7 @@
             <img src="images/4.jpg" alt="">
             <div class="text">
                 <h3>EveryThing</h3>
-                    A Marvel Comics superhero team.
+                    A Hollywood Suspense, Sci-fi.
                     
             </div>
         </div>
@@ -397,18 +403,62 @@
         <div class="box drama">
             <img src="images/24.jpg" alt="">
             <div class="text">
-                <h3>Black Widow</h3>
+                <h3>Spider-Man Homecoming</h3>
                     A Marvel Comics superhero team.
                     
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front1.jpg" alt="">
+            <div class="text">
+                <h3>The Future</h3>
+                Releasing Summer 2026.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front2.jpg" alt="">
+            <div class="text">
+                <h3>Mars Colony</h3>
+                The journey begins in late 2026.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front3.jpg" alt="">
+            <div class="text">
+                <h3>Deep Sea</h3>
+                Mystery from the depths - 2027.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front4.jpg" alt="">
+            <div class="text">
+                <h3>Cyber City</h3>
+                Neon nights are coming soon.
+            </div>
+        </div>
+        <div class="box upcoming">
+            <img src="images/front5.jpg" alt="">
+            <div class="text">
+                <h3>Ghost Hunter</h3>
+                The hunt starts this October.
             </div>
         </div>
     </div>
     </section>
     <footer>
         <img src="images/logo.jpg" alt="">
-        <p>Powered by 365 Entertainment Portal 2019. All Rights Reserved.</p>
+        <p>Powered by 365 Entertainment Portal 2026. All Rights Reserved.</p>
     </footer>
+    
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-details">
+            </div>
+        </div>
+    </div>
     
 </body>
 <script src="script.js"></script>
+<script src="movies-ratings.js"></script>
 </html>

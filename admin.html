@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.jpg" type="image/png" sizes="16x20">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" />
+    <title>Admin Dashboard | 365 Entertainment</title>
+    <style>
+        .admin-dash { padding: 40px 20px; max-width: 900px; margin: 0 auto; }
+        .admin-dash h1 { color: #fff; margin-bottom: 24px; }
+        .admin-card { background: rgba(0,0,0,0.6); padding: 24px; border-radius: 12px; margin-bottom: 20px; color: #e5e5e5; }
+        .admin-card h2 { color: #fab752; margin-bottom: 12px; font-size: 1.2rem; }
+        .admin-card a { color: #fab752; }
+        .admin-card .logout { display: inline-block; margin-top: 16px; padding: 8px 16px; background: #c92a2a; color: #fff; border-radius: 6px; text-decoration: none; }
+        .admin-card .logout:hover { opacity: 0.9; }
+        .stats-row { display: flex; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+        .stat-box { background: rgba(0,0,0,0.6); padding: 20px 24px; border-radius: 12px; min-width: 140px; text-align: center; }
+        .stat-box .number { font-size: 2rem; font-weight: bold; color: #fab752; display: block; }
+        .stat-box .label { color: #b0b0b0; font-size: 0.9rem; }
+        .admin-form label { display: block; color: #e5e5e5; margin-bottom: 4px; font-size: 14px; }
+        .admin-form input { width: 100%; padding: 10px 12px; margin-bottom: 12px; border: 1px solid #444; border-radius: 6px; background: #333; color: #fff; box-sizing: border-box; }
+        .admin-form input:focus { outline: none; border-color: #fab752; }
+        .admin-form button { padding: 10px 20px; background: linear-gradient(-45deg, #fab752, #f0e268); border: none; border-radius: 6px; font-weight: bold; cursor: pointer; color: #000; }
+        .admin-form button:hover { opacity: 0.9; }
+        .form-msg { margin-top: 8px; font-size: 14px; min-height: 20px; }
+        .form-msg.success { color: #51cf66; }
+        .form-msg.error { color: #ff6b6b; }
+
+        .activity-table-container { overflow-x: auto; margin-top: 20px; }
+        .activity-table { width: 100%; border-collapse: collapse; color: #e5e5e5; font-size: 0.9rem; }
+        .activity-table th, .activity-table td { padding: 12px 15px; text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        .activity-table th { background: rgba(1, 180, 228, 0.1); color: #01b4e4; font-weight: 600; text-transform: uppercase; font-size: 0.8rem; }
+        .activity-table tr:hover { background: rgba(255,255,255,0.03); }
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 0.75rem; font-weight: bold; }
+        .badge-admin { background: rgba(250, 183, 82, 0.2); color: #fab752; }
+        .badge-user { background: rgba(1, 180, 228, 0.2); color: #01b4e4; }
+        .activity-count { font-weight: bold; color: #fff; }
+
+        .btn-delete { background: rgba(255, 107, 107, 0.2); color: #ff6b6b; border: 1px solid #ff6b6b; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; }
+        .btn-delete:hover { background: #ff6b6b; color: #fff; }
+    </style>
+</head>
+<body>
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="videoplayback.webm" type="video/webm">
+    </video>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+            <ul id="navlinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="admin.html">Admin</a></li>
+                <li><a href="admin-login.html">Admin Login</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="admin-dash">
+        <h1><i class="fas fa-user-shield"></i> Admin Dashboard</h1>
+
+        <div class="admin-card">
+            <h2>Welcome, <span id="admin-name">Admin</span></h2>
+            <p>You are logged in as an administrator.</p>
+            <a href="index.html">Back to site</a> &nbsp;|&nbsp;
+            <a href="admin-login.html" class="logout">Log out</a>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-chart-bar"></i> Overview</h2>
+            <div class="stats-row">
+                <div class="stat-box">
+                    <span class="number" id="stat-users">–</span>
+                    <span class="label">Users</span>
+                </div>
+                <div class="stat-box">
+                    <span class="number" id="stat-movies">–</span>
+                    <span class="label">Movies</span>
+                </div>
+                <div class="stat-box">
+                    <span class="number" id="stat-tvshows">–</span>
+                    <span class="label">TV Shows</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-users"></i> User Activities</h2>
+            <div class="activity-table-container">
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>User Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Ratings</th>
+                            <th>Watchlist</th>
+                            <th>Joined On</th>
+                        </tr>
+                    </thead>
+                    <tbody id="user-activity-body">
+                        <tr><td colspan="6" style="text-align:center; padding: 20px;">Loading user activities...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-edit"></i> Manage Content</h2>
+            <div class="activity-table-container">
+                <table class="activity-table">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Type</th>
+                            <th>Genre</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="content-manage-body">
+                        <tr><td colspan="4" style="text-align:center; padding: 20px;">Loading content...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-film"></i> Add Movie</h2>
+            <form id="add-movie-form" class="admin-form">
+                <label for="movie-title">Title *</label>
+                <input type="text" id="movie-title" name="title" placeholder="Movie title" required>
+                <label for="movie-desc">Description</label>
+                <input type="text" id="movie-desc" name="description" placeholder="Short description">
+                <label for="movie-image">Image URL</label>
+                <input type="text" id="movie-image" name="image_url" placeholder="images/movie.jpg">
+                <label for="movie-genre">Genre</label>
+                <input type="text" id="movie-genre" name="genre" placeholder="e.g. Action, Drama">
+                <label for="movie-release">Release Date</label>
+                <input type="text" id="movie-release" name="release_date" placeholder="e.g. July 15, 2026">
+                <button type="submit">Add Movie</button>
+            </form>
+            <p class="form-msg" id="movie-msg" role="alert"></p>
+        </div>
+
+        <div class="admin-card">
+            <h2><i class="fas fa-tv"></i> Add TV Show</h2>
+            <form id="add-tvshow-form" class="admin-form">
+                <label for="tvshow-title">Title *</label>
+                <input type="text" id="tvshow-title" name="title" placeholder="TV show title" required>
+                <label for="tvshow-desc">Description</label>
+                <input type="text" id="tvshow-desc" name="description" placeholder="Short description">
+                <label for="tvshow-image">Image URL</label>
+                <input type="text" id="tvshow-image" name="image_url" placeholder="images/show.jpg">
+                <label for="tvshow-genre">Genre</label>
+                <input type="text" id="tvshow-genre" name="genre" placeholder="e.g. Drama, Comedy">
+                <label for="tvshow-release">Release Date</label>
+                <input type="text" id="tvshow-release" name="release_date" placeholder="e.g. Coming 2027">
+                <button type="submit">Add TV Show</button>
+            </form>
+            <p class="form-msg" id="tvshow-msg" role="alert"></p>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            const admin = localStorage.getItem('admin');
+            if (!admin) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            let data;
+            try {
+                data = JSON.parse(admin);
+            } catch (e) {
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            if (data.role !== 'admin') {
+                localStorage.removeItem('admin');
+                window.location.href = 'admin-login.html';
+                return;
+            }
+            const nameEl = document.getElementById('admin-name');
+            if (nameEl && data.name) nameEl.textContent = data.name;
+        })();
+
+        async function loadStats() {
+            try {
+                const res = await fetch('/api/admin/stats');
+                const d = await res.json();
+                document.getElementById('stat-users').textContent = d.users != null ? d.users : '–';
+                document.getElementById('stat-movies').textContent = d.movies != null ? d.movies : '–';
+                document.getElementById('stat-tvshows').textContent = d.tvShows != null ? d.tvShows : '–';
+            } catch (e) {
+                document.getElementById('stat-users').textContent = '–';
+                document.getElementById('stat-movies').textContent = '–';
+                document.getElementById('stat-tvshows').textContent = '–';
+            }
+        }
+
+        async function loadUserActivity() {
+            const tbody = document.getElementById('user-activity-body');
+            try {
+                const res = await fetch('/api/admin/users-activity');
+                const data = await res.json();
+                if (data.success && data.users) {
+                    tbody.innerHTML = '';
+                    data.users.forEach(user => {
+                        const tr = document.createElement('tr');
+                        const date = new Date(user.created_at).toLocaleDateString();
+                        tr.innerHTML = `
+                            <td><i class="fas fa-user-circle"></i> ${user.name}</td>
+                            <td>${user.email}</td>
+                            <td><span class="badge ${user.role === 'admin' ? 'badge-admin' : 'badge-user'}">${user.role.toUpperCase()}</span></td>
+                            <td class="activity-count"><i class="fas fa-star" style="color: #fab752;"></i> ${user.ratings_count}</td>
+                            <td class="activity-count"><i class="fas fa-bookmark" style="color: #01b4e4;"></i> ${user.watchlist_count}</td>
+                            <td style="color: #888;">${date}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px;">No user activity found.</td></tr>';
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; padding: 20px; color: #ff6b6b;">Error loading data.</td></tr>';
+            }
+        }
+
+        async function loadAllContent() {
+            const tbody = document.getElementById('content-manage-body');
+            try {
+                const res = await fetch('/api/admin/all-content');
+                const data = await res.json();
+                if (data.success && data.content) {
+                    tbody.innerHTML = '';
+                    data.content.forEach(item => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td style="font-weight: bold;">${item.title}</td>
+                            <td><span class="badge badge-user">${item.type.replace('_', ' ').toUpperCase()}</span></td>
+                            <td>${item.genre || '–'}</td>
+                            <td><button class="btn-delete" onclick="deleteContent('${item.type}', ${item.id})"><i class="fas fa-trash"></i> Delete</button></td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px;">No content found.</td></tr>';
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 20px; color: #ff6b6b;">Error loading content.</td></tr>';
+            }
+        }
+
+        async function deleteContent(type, id) {
+            if (!confirm('Are you sure you want to delete this item?')) return;
+            try {
+                const res = await fetch(`/api/admin/${type}/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                if (data.success) {
+                    loadAllContent();
+                    loadStats();
+                } else {
+                    alert(data.message || 'Failed to delete');
+                }
+            } catch (e) {
+                alert('Error connecting to server');
+            }
+        }
+
+        loadStats();
+        loadUserActivity();
+        loadAllContent();
+
+        document.getElementById('add-movie-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msg = document.getElementById('movie-msg');
+            msg.textContent = '';
+            msg.className = 'form-msg';
+            const form = e.target;
+            const body = {
+                title: form.title.value.trim(),
+                description: form.description.value.trim(),
+                image_url: form.image_url.value.trim(),
+                genre: form.genre.value.trim(),
+                release_date: form.release_date.value.trim()
+            };
+            try {
+                const res = await fetch('/api/admin/movies', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    msg.textContent = 'Movie added successfully!';
+                    msg.className = 'form-msg success';
+                    form.reset();
+                    loadStats();
+                    loadAllContent();
+                } else {
+                    msg.textContent = data.message || 'Failed to add movie.';
+                    msg.className = 'form-msg error';
+                }
+            } catch (err) {
+                msg.textContent = 'Server error. Try again.';
+                msg.className = 'form-msg error';
+            }
+        });
+
+        document.getElementById('add-tvshow-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const msg = document.getElementById('tvshow-msg');
+            msg.textContent = '';
+            msg.className = 'form-msg';
+            const form = e.target;
+            const body = {
+                title: form.title.value.trim(),
+                description: form.description.value.trim(),
+                image_url: form.image_url.value.trim(),
+                genre: form.genre.value.trim(),
+                release_date: form.release_date.value.trim()
+            };
+            try {
+                const res = await fetch('/api/admin/tvshows', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                if (data.success) {
+                    msg.textContent = 'TV show added successfully!';
+                    msg.className = 'form-msg success';
+                    form.reset();
+                    loadStats();
+                    loadAllContent();
+                } else {
+                    msg.textContent = data.message || 'Failed to add TV show.';
+                    msg.className = 'form-msg error';
+                }
+            } catch (err) {
+                msg.textContent = 'Server error. Try again.';
+                msg.className = 'form-msg error';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "npm start",
+            "type": "npm",
+            "script": "start",
+            "path": "365-Entertainment/",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [],
+            "detail": "Runs the 365 Entertainment server"
+        }
+    ]
+}

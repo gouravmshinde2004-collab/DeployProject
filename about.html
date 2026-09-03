@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | 365 Entertainment</title>
+    <link rel="icon" href="images/logo.jpg" type="image/png" sizes="16x20">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+    <style>
+        .about-container {
+            max-width: 1000px;
+            margin: 50px auto;
+            background: rgba(13, 37, 63, 0.9);
+            padding: 60px;
+            border-radius: 20px;
+            color: white;
+            line-height: 1.8;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(1, 180, 228, 0.2);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+        .about-container h1 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 40px;
+            font-size: 3rem;
+            font-weight: 800;
+        }
+        .about-container h2 {
+            color: #01b4e4;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+        .about-container p {
+            margin-bottom: 25px;
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+        }
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+        .feature-item {
+            background: rgba(255, 255, 255, 0.03);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateY(-10px);
+            border-color: #01b4e4;
+        }
+        .feature-item i {
+            font-size: 2.5rem;
+            color: #01b4e4;
+            margin-bottom: 20px;
+        }
+        .feature-item h3 {
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="videoplayback.webm" type="video/webm">
+    </video>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
+            <button class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul id="navlinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="about.html">About Us</a></li>
+            </ul>
+            <ul class="nav-right">
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Signup</a></li>
+                <li class="admin-link"><a href="admin-login.html">Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section>
+        <div class="about-container">
+            <h1>About 365 Entertainment</h1>
+            <p>Welcome to <strong>365 Entertainment</strong>, your ultimate destination for discovering the best movies and TV series from across the globe. Whether you're a fan of heart-pounding action, gripping dramas, or mind-bending sci-fi, we bring you a curated collection of top-rated content from major streaming platforms like Netflix and Prime Video.</p>
+            
+            <h2>Our Mission</h2>
+            <p>Our mission is to provide a seamless and engaging platform for entertainment enthusiasts to explore, rate, and review their favorite content. We believe that every great story deserves to be found, and we're here to help you find yours.</p>
+
+            <div class="about-features">
+                <div class="feature-item">
+                    <i class="fas fa-film"></i>
+                    <h3>Vast Library</h3>
+                    <p>Access a wide range of movies and TV shows across multiple genres.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-star"></i>
+                    <h3>User Ratings</h3>
+                    <p>Share your thoughts and see what others are saying about the latest hits.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>Admin Portal</h3>
+                    <p>Our dedicated team keeps the library updated with the newest releases.</p>
+                </div>
+            </div>
+
+            <h2>Why Choose Us?</h2>
+            <p>At 365 Entertainment, we prioritize your viewing experience. Our platform is designed with a modern, responsive interface, ensuring you can browse comfortably on any device. With our integrated MySQL database, your ratings and preferences are securely saved, giving you a personalized touch to your entertainment journey.</p>
+        </div>
+    </section>
+
+    <footer>
+        <img src="images/logo.jpg" alt="">
+        <p>Powered by 365 Entertainment Portal 2026. All Rights Reserved.</p>
+    </footer>
+    
+</body>
+<script src="script.js"></script>
+</html>

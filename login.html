@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.jpg" type="image/png" sizes="16x20">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" />
+    <title>User Login | 365 Entertainment</title>
+</head>
+<body>
+    <video class="bg-video" autoplay muted loop playsinline>
+        <source src="videoplayback.webm" type="video/webm">
+    </video>
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
+            <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+            <ul id="navlinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="login.html">User Login</a></li>
+                <li><a href="admin-login.html">Admin Login</a></li>
+                <li><a href="signup.html">Sign up</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="auth-page">
+        <div class="auth-box">
+            <h1>User Log in</h1>
+            <form id="login-form">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="your@email.com" required>
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="••••••••" required>
+                <button type="submit">Log in</button>
+            </form>
+            <p class="message" id="message" role="alert"></p>
+            <p class="auth-link">Don't have an account? <a href="signup.html">Sign up</a></p>
+            <p class="auth-link">Admin? <a href="admin-login.html">Admin Login</a></p>
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById('login-form');
+        const messageEl = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            messageEl.textContent = '';
+            messageEl.className = 'message';
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+
+            try {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, password })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.user && data.user.role === 'admin') {
+                        messageEl.textContent = 'This is an admin account. Use Admin Login.';
+                        messageEl.className = 'message error';
+                        return;
+                    }
+                    localStorage.setItem('user', JSON.stringify(data.user));
+                    messageEl.textContent = 'Welcome, ' + (data.user && data.user.name) + '!';
+                    messageEl.className = 'message success';
+                    setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+                } else {
+                    messageEl.textContent = data.message || 'Login failed';
+                    messageEl.className = 'message error';
+                }
+            } catch (err) {
+                messageEl.textContent = 'Cannot reach server. Start the server with: npm start';
+                messageEl.className = 'message error';
+            }
+        });
+    </script>
+</body>
+</html>

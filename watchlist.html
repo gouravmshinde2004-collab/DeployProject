@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="images/logo.jpg" type="image/png" sizes="16x20">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" crossorigin="anonymous" />
+    <title>My Watchlist | 365 Entertainment</title>
+</head>
+<body style="background: #0d253f;">
+    <header>
+        <nav>
+            <a href="index.html" class="logo"><img src="images/logo.jpg" alt="logo"></a>
+            <ul id="navlinks">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="movies.html">Movies</a></li>
+                <li><a href="tvshow.html">TV Series</a></li>
+                <li><a href="watchlist.html">Watchlist</a></li>
+            </ul>
+            <ul class="nav-right" id="nav-auth">
+                <li><a href="login.html">Login</a></li>
+                <li><a href="signup.html">Signup</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main style="padding: 40px; max-width: 1200px; margin: 0 auto;">
+        <h1 style="color: #fff; margin-bottom: 30px;"><i class="fas fa-bookmark"></i> My Watchlist</h1>
+        <div id="watchlist-container" class="images">
+            <p id="empty-msg" style="color: #999; display: none;">Your watchlist is empty. Start adding movies!</p>
+        </div>
+    </main>
+
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="modal-details"></div>
+        </div>
+    </div>
+
+    <footer>
+        <img src="images/logo.jpg" alt="">
+        <p>Powered by 365 Entertainment Portal 2026. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="movies-ratings.js"></script>
+    <script>
+        (function() {
+            const user = JSON.parse(localStorage.getItem('user') || localStorage.getItem('admin') || 'null');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+
+            function loadWatchlist() {
+                fetch('/api/watchlist?user_id=' + user.id)
+                    .then(r => r.json())
+                    .then(data => {
+                        const container = document.getElementById('watchlist-container');
+                        if (data.success && data.watchlist.length > 0) {
+                            container.innerHTML = '';
+                            data.watchlist.forEach(movieKey => {
+                                fetch('/api/movie-details?movie_key=' + encodeURIComponent(movieKey))
+                                    .then(r => r.json())
+                                    .then(movieData => {
+                                        if (movieData.success) {
+                                            const movie = movieData.info || { title: movieKey, description: 'No description' };
+                                            const box = document.createElement('div');
+                                            box.className = 'box';
+                                            box.innerHTML = `
+                                                <img src="${movie.image_url || 'images/logo.jpg'}" alt="${movie.title}">
+                                                <div class="text">
+                                                    <h3>${movie.title}</h3>
+                                                    <p style="color: #01b4e4; font-size: 0.8rem;">${movie.genre || ''}</p>
+                                                </div>
+                                            `;
+                                            container.appendChild(box);
+                                            
+                                            // Add click listener for details
+                                            box.onclick = () => {
+                                                if (window.showMovieDetails) {
+                                                    window.showMovieDetails(movie.title, box);
+                                                }
+                                            };
+                                        }
+                                    });
+                            });
+                        } else {
+                            document.getElementById('empty-msg').style.display = 'block';
+                        }
+                    });
+            }
+            
+            // Wait for movies-ratings.js to load its functions into global scope
+            setTimeout(loadWatchlist, 500);
+        })();
+    </script>
+</body>
+</html>
